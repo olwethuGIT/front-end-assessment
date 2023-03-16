@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import InputField from '../components/input/index';
+import RadioButtonField from '../components/radio-button/index';
 
 export const PageWrapper = styled.section`
   &,
@@ -29,6 +30,8 @@ export const PageWrapper = styled.section`
   border-radius: 4px;
 `;
 
+
+
 export const Input = styled(InputField)`
   background-color: white;
   border: none;
@@ -38,8 +41,8 @@ export const Input = styled(InputField)`
   font-style: normal;
   font-weight: 400;
   width: 100%;
-  margin-top: 0.5rem;
-  padding: 0.5rem 0rem;
+  margin: 10px;
+  margin-right: 0px;
 
   &:focus,
   &:active {
@@ -61,8 +64,8 @@ export const Input = styled(InputField)`
   }
 
   ${({ valid }) =>
-        valid &&
-        css`
+    valid &&
+    css`
       border: none;
       border-bottom: 1px solid red;
 
@@ -77,8 +80,16 @@ export const Input = styled(InputField)`
 `;
 
 export const Label = styled.label`
-  margin-top: 1.5rem;
+  margin-left: 10px;
   width: 100%;
+`;
+
+export const InputLabel = styled.label`
+  margin-left: 10px;
+  width: 100%;
+  input:focus ~ & {
+    color: blue;
+  }
 `;
 
 export const StyledInlineErrorMessage = styled.div`
@@ -86,4 +97,55 @@ export const StyledInlineErrorMessage = styled.div`
   display: block;
   margin-top: 0.5rem;
   white-space: pre-line;
+`;
+
+export const Wrapper = styled.div`
+   display: inline-block;
+`;
+
+export const RadioWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 35px;
+  width: 90px;
+  border: 1px solid ${(props) => (props.active ? '#0E86D4' : '#ccc')};
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 10px;
+  background: ${(props) => (props.active ? '#D4F1F4' : 'white')};
+  &::before {
+    border-radius: 100%;
+    background:#000;
+  }
+`;
+
+export const MultiRadioWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 2px;
+  margin-bottom: 10px;
+`;
+
+export const Icon = styled.div`
+  flex: 0 0;
+`;
+
+export const Container = styled.div`
+  font-family: 'Arial';
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Radio = styled(RadioButtonField)`
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  transition: 0.1s all linear;
+  &:checked {
+    border: 6px solid blue;
+  }
 `;

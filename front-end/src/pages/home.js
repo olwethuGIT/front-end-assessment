@@ -2,9 +2,11 @@ import data from '../api/questions.json';
 import { useState } from 'react';
 import { Form, TextField, RadioField } from '../components/element';
 
-import { PageWrapper } from './styles';
+import { PageWrapper, Wrapper, MultiRadioWrapper, Label, Icon } from './styles';
 
 export default function Home({ details }) {
+    const [activeYes, setActiveYes] = useState(false);
+    const [activeNo, setActiveNo] = useState(false);
     const [inputFields, setInputFields] = useState({ details })
     const [formData, setFormData] = useState({
         name: "",
@@ -12,17 +14,20 @@ export default function Home({ details }) {
         role: ""
     });
     const onSubmit = (values, { setSubmitting, resetForm, setStatus }) => {
-        console.log(values);
         setSubmitting(false);
     }
 
     const handleOnChange = (e) => {
         if (e.target.value === 'YES') {
+            setActiveYes(true);
+            setActiveNo(false);
             setInputFields(prevState => ({
                 ...prevState,
                 [e.target.name]: true
             }))
         } else {
+            setActiveYes(false);
+            setActiveNo(true);
             setInputFields(prevState => ({
                 ...prevState,
                 [e.target.name]: false
@@ -49,24 +54,30 @@ export default function Home({ details }) {
                                             type={field.type}
                                             placeholder={field.placeholder}
                                         />
+
                                     </div>;
                                 }
                             });
                         }
 
                         if (field.type === "bool") {
-                            return <div key={index} role="group" aria-labelledby="my-radio-group" onChange={handleOnChange}>
-                                <RadioField
-                                    name={field.code}
-                                    label={field.falseLabel}
-                                    value={field.falseLabel}
-                                />
-                                <RadioField
-                                    name={field.code}
-                                    label={field.trueLabel}
-                                    value={field.trueLabel}
-                                />
-                            </div>;
+                            return <Wrapper key={index} role="group" aria-labelledby="my-radio-group" onChange={handleOnChange}>
+                                <Label>{field.text}</Label>
+                                <MultiRadioWrapper>
+                                    <RadioField
+                                        name={field.code}
+                                        label={field.falseLabel}
+                                        value={field.falseLabel}
+                                        active={activeNo}
+                                    />
+                                    <RadioField
+                                        name={field.code}
+                                        label={field.trueLabel}
+                                        value={field.trueLabel}
+                                        active={activeYes}
+                                    />
+                                </MultiRadioWrapper>
+                            </Wrapper>;
                         }
                     })
                 }

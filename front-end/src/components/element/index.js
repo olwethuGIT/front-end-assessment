@@ -2,10 +2,10 @@ import React from 'react';
 import {
     Formik,
     Form as FormikForm,
-    Field,
     ErrorMessage,
 } from 'formik';
-import { PageWrapper, Input, Label, StyledInlineErrorMessage } from '../../pages/styles';
+import { RadioWrapper, Input, Label, Radio, Icon, Container } from '../../pages/styles';
+import Info from '../../assets/icon-info.svg';
 
 export function Form(props) {
     return (
@@ -22,29 +22,40 @@ export function TextField(props) {
     const { name, label, placeholder, text, ...rest } = props
     return (
         <>
-            {label && <label htmlFor={name}>{label}</label>}
-            <Input
-                className="form-control"
-                type={text}
-                name={name}
-                id={name}
-                placeholder={placeholder || ""}
-                {...rest}
-            />
+            {label && <Label htmlFor={name}>{label}</Label>}
+            <Container>
+                <Input
+                    className="form-control"
+                    type={text}
+                    name={name}
+                    id={name}
+                    placeholder={placeholder || ""}
+                    {...rest}
+                />
+                <Icon>
+                    <img src={Info} alt="info" />
+                </Icon>
+            </Container>
             <ErrorMessage name={name} render={msg => <div style={{ color: 'red' }} >{msg}</div>} />
         </>
     )
 }
 
 export function RadioField(props) {
-    const { name, label, value } = props
+    const { name, label, value, active, ...rest } = props
     return (
         <>
             {
-                label && <label htmlFor={name}>
-                    <Field type="radio" name={name} value={value} />
-                    {label}
-                </label>
+                label && <RadioWrapper active={active}>
+                    <Radio
+                        className="form-control"
+                        type="radio"
+                        name={name}
+                        id={name}
+                        value={value}
+                        {...rest} />
+                    <label htmlFor={name}>{label}</label>
+                </RadioWrapper>
             }
 
         </>
